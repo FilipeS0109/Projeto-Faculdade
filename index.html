@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Biblioteca</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    label, input {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    #cupon {
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+      white-space: pre-line;
+    }
+
+    /* Oculta tudo na impressão, exceto o cupo */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #cupon, #cupon * {
+        visibility: visible;
+      }
+      #cupon {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 20px;
+        border: none;
+        background: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h2>Biblioteca</h2>
+
+<section>
+  <form id="formulario">
+    <label for="idNome">Nome</label>
+    <input type="text" id="idNome" required>
+
+    <label for="idSobrenome">Sobrenome</label>
+    <input type="text" id="idSobrenome" required>
+
+    <label for="idEndereço">Endereço</label>
+    <input type="text" id="idEndereço" required>
+
+    <label for="idn°casa">n° casa</label>
+    <input type="number" id="idn°casa" required>
+
+    <label for="idbairro">Bairro</label>
+    <input type="text" id="idbairro" required>
+
+    <label for="idE-mail">E-mail</label>
+    <input type="email" id="idE-mail" required>
+
+    <label for="idCelular">Celular</label>
+    <input type="number" id="idCelular" required>
+
+    <label for="idnomedolivro">Nome do Livro</label>
+    <input type="text" id="idnomedolivro" required>
+
+    <label for="idCódicoDoLivro">Código do Livro</label>
+    <input type="number" id="idCódicoDoLivro" required>
+
+    <input type="submit" value="GERAR CUPOM">
+  </form>
+</section>
+
+<section>
+  <h1 id="cupon"></h1>
+  <!-- Botão de impressão -->
+  <button onclick="imprimirCupom()">Imprimir Cupom</button>
+</section>
+
+<script>
+  // Gera o texto do cupom ao enviar
+  document.getElementById("formulario").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    let nome = document.getElementById("idNome").value;
+    let sobrenome = document.getElementById("idSobrenome").value;
+    let endereco = document.getElementById("idEndereço").value;
+    let numeroCasa = document.getElementById("idn°casa").value;
+    let bairro = document.getElementById("idbairro").value;
+    let email = document.getElementById("idE-mail").value;
+    let celular = document.getElementById("idCelular").value;
+    let nomeLivro = document.getElementById("idnomedolivro").value;
+    let codigoLivro = document.getElementById("idCódicoDoLivro").value;
+
+    let mensagem = `Eu, ${nome} ${sobrenome}, residente à ${endereco}, nº ${numeroCasa}, bairro ${bairro},
+declaro que retirei o livro descrito abaixo, sob minha responsabilidade.
+
+Para fins de contato, informo meu e-mail: ${email} e meu número de celular: ${celular}.
+
+Livro Retirado:
+Título: ${nomeLivro}
+Código: ${codigoLivro}
+
+Comprometo-me a conservar o material e devolvê-lo dentro do prazo estabelecido.
+
+Data da Retirada: _//___
+Assinatura do Leitor: ____________________`;
+
+    document.getElementById("cupon").innerText = mensagem;
+  });
+
+  // Imprime apenas o cupom
+  function imprimirCupom() {
+    window.print();
+  }
+</script>
+
+</body>
+</html>
